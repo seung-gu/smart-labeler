@@ -36,10 +36,6 @@ jobs:
           git config user.name "seung-gu"
           git config user.email "seunggu.kang.kr@gmail.com"
           git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ github.repository }}
-          
-          echo "🔍 Git Remote confirmation"
-          git remote -v
-    
           git add docs/devlog.md
           git commit -m "🔄 Auto-update devlog" || echo "No changes"
           git push origin HEAD:main
