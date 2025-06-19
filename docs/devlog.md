@@ -2,7 +2,7 @@
 
 ----
 ## 2025-06-19
-- [#3](https://github.com/seung-gu/smart-labeler/issues/3) Initialize PlatformIO project for Nano 33 BLE
+### - [#3](https://github.com/seung-gu/smart-labeler/issues/3) Initialize PlatformIO project for Nano 33 BLE
 structure
 
 ```
