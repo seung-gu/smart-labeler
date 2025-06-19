@@ -55,7 +55,7 @@ def load_existing_log(path):
     return ""
 
 # Append new entries to devlog.md
-def write_devlog(entries, out_path="../docs/devlog.md"):
+def write_devlog(entries, out_path="docs/devlog.md"):
     existing = load_existing_log(out_path)
     today = datetime.now().strftime("%Y-%m-%d")
     new_block = [f"\n## {today}\n"]
