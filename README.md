@@ -69,7 +69,7 @@ smart-labeler/
 ## 🚀 Getting Started
 
 
-### 🔧 1. Upload firmware to Nano 33 BLE
+### 1. Upload firmware to Nano 33 BLE
 
     cd nano/
     platformio run --target upload
@@ -78,7 +78,7 @@ smart-labeler/
 Ensure the OV7675 is properly connected and configured in main.cpp.
 
 ----
-### 🖥 2. Start FastAPI server (LLM backend)
+### 2. Start FastAPI server (LLM backend)
 
     cd server/
     docker build -t smart-labeler-server .
@@ -88,7 +88,7 @@ Server will accept image via POST, call the LLM, and return a JSON like:
 
     { "keyword": "banana" }
 ----
-### 🧪 3. Receive image from Nano and forward to server
+### 3. Receive image from Nano and forward to server
 
     cd scripts/
     python serial_receiver.py
@@ -108,7 +108,13 @@ This script:
 
 See [docs/architecture.md](docs/architecture.md) for system design, data flow, and prompt engineering notes.
 
----
+
+----
+## 📄 Development Log
+
+See [docs/devlog.md](docs/devlog.md) for development log.
+
+----
 ## 📅 Development Roadmap 
 
 You can follow the project development at
