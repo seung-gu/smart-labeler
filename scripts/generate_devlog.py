@@ -55,85 +55,67 @@ def load_existing_log(path):
     return ""
 
 # Append new entries to devlog.md
-def write_devlog(entries, out_path="docs/devlog.md"):
+def write_devlog(entries, out_path=None):
     existing = load_existing_log(out_path)
     today = datetime.now().strftime("%Y-%m-%d")
-    new_block = [f"\n## {today}\n"]
+    new_block = [f"\n----\n## {today}"]
 
     for entry in entries:
-        line = f"- #{entry['number']} {entry['title']}"
-        extra_lines = []
+        issue_url = f"https://github.com/{REPO}/issues/{entry['number']}"
+        title_line = f"### - [#{entry['number']}]({issue_url}) {entry['title']}"
+        block_lines = [title_line]
 
-        # Collect any missing body lines
+        # Add body content
         if entry["body"]:
             for body_line in entry["body"].strip().splitlines():
-                formatted = f"  ➤ {body_line}"
-                if formatted not in existing:
-                    extra_lines.append(formatted)
+                formatted = f"{body_line}"
+                block_lines.append(formatted)
 
-        # Collect any missing comment lines
-        for comment in entry.get("comments", []):
-            for comment_line in comment.strip().splitlines():
-                formatted = f"  💬 {comment_line}"
-                if formatted not in existing:
-                    extra_lines.append(formatted)
-
-        if line in existing:
-            # If title exists, only append missing body/comments (with title first)
-            if extra_lines:
-                new_block.append(line)
-                new_block.extend(extra_lines)
-                new_block.append("")
-            continue
-
-        # New issue entry entirely
-        new_block.append(line)
-        new_block.extend(extra_lines)
+        new_block.extend(block_lines)
         new_block.append("")
 
-    # Nothing to add
-    if len(new_block) <= 2:
-        print("⚠️ No new entries to append. Skipping.")
-        return
+    # Remove existing today's section
+    if f"## {today}" in existing:
+        pattern = rf"----\n## {today}.*?(?=\n----|\Z)"
+        existing = re.sub(pattern, "", existing, flags=re.DOTALL).strip()
 
-    # Insert into today's section if it already exists
-    if today in existing:
-        updated = ""
-        found = False
-        for line in existing.splitlines():
-            updated += line + "\n"
-            if line.strip() == f"## {today}":
-                found = True
-                break
-        remaining = existing.split(f"## {today}", 1)[1].splitlines()[1:]
-        updated += "\n".join(new_block[2:]) + "\n" + "\n".join(remaining)
-        with open(out_path, "w", encoding="utf-8") as f:
-            f.write(updated)
-    else:
-        # Append entire new section
-        with open(out_path, "a", encoding="utf-8") as f:
-            f.write("\n" + "\n".join(new_block) + "\n")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(existing.rstrip() + "\n" + "\n".join(new_block) + "\n")
 
     print("✅ Devlog updated with:", entries)
 
 # Prompt user to manually enter issue numbers
 def manual_input_mode():
     print("✍️ Manual mode activated.")
-    issue_numbers = input("Enter issue numbers (comma-separated, e.g. 1,2,3): ")
+    url = f"https://api.github.com/repos/{REPO}/issues?state=all&per_page=100"
+    res = requests.get(url, headers=HEADERS)
+    res.raise_for_status()
+    issues = [issue for issue in res.json() if "pull_request" not in issue]
+
+    print("📝 Available Issues:")
+    for issue in issues:
+        print(f"  #{issue['number']}: {issue['title']}")
+
+    issue_numbers = input("Enter issue numbers to include (comma-separated): ")
     return [num.strip() for num in issue_numbers.split(",") if num.strip().isdigit()]
 
-
 if __name__ == "__main__":
-    print("📡 Fetching latest commit info...")
-    commit_msg = get_latest_commit_message()
-    issue_numbers = extract_referenced_issues(commit_msg)
+    use_manual = os.getenv("CI") != "true" and input("🛠 Manual update? (y/N): ").strip().lower() == "y"
+
+    if use_manual:
+        issue_numbers = manual_input_mode()
+    else:
+        print("📡 Fetching latest commit info...")
+        commit_msg = get_latest_commit_message()
+        issue_numbers = extract_referenced_issues(commit_msg)
+
+        if not issue_numbers:
+            print("⚠️ No issue references found in commit. Skipping devlog update.")
+            sys.exit(0)
 
     if not issue_numbers:
-        print("⚠️ No issue references found in commit. Entering manual mode...")
-        issue_numbers = manual_input_mode()
-        if not issue_numbers:
-            print("❌ No issues entered. Exiting.")
-            exit()
+        print("❌ No issues entered. Exiting.")
+        exit()
 
     entries = []
     for num in issue_numbers:
@@ -142,4 +124,5 @@ if __name__ == "__main__":
         detail["comments"] = comments
         entries.append(detail)
 
-    write_devlog(entries)
+    devlog_path = "docs/devlog.md" if os.path.exists("docs") else "../docs/devlog.md"
+    write_devlog(entries, out_path=devlog_path)
