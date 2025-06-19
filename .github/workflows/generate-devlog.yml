@@ -28,9 +28,12 @@ jobs:
         run: python scripts/generate_devlog.py
 
       - name: Commit and push changes
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "your-username"
+          git config user.email "your@email.com"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}
           git add docs/devlog.md
-          git commit -m "🔄 Update devlog (auto)" || echo "No changes"
-          git push
+          git commit -m "🔄 Auto-update devlog" || echo "No changes"
+          git push origin HEAD:main
