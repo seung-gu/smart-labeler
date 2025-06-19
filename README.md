@@ -110,7 +110,7 @@ See [docs/architecture.md](docs/architecture.md) for system design, data flow, a
 
 
 ----
-## 📄 Development Log
+## 📘 Development Log
 
 See [docs/devlog.md](docs/devlog.md) for development log.
 
