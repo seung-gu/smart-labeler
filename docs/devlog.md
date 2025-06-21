@@ -22,8 +22,11 @@ smart-labeler/
 
 ----
 ## 2025-06-21
-### - [#15](https://github.com/seung-gu/smart-labeler/issues/15) Virtual environment setup
-This project is configured using `pipenv` for virtual environment and dependency management.
+### - [#11](https://github.com/seung-gu/smart-labeler/issues/11) OV7675 camera: wiring, configuration, and signal verification
+- [x] Implement a code running OV7675 camera in Nano 33 BLE 
+> Nano 33 BLE <----(serial com)----> Desktop 
 
-The packages will be managed via `Pipfile` and `Pipfile.lock`.
+- [x] Get signal in Desktop through Serial communication
+- [x] Verify the signal as an image
+- [ ] Save RGB image in the desktop when the buffer is full (image is fully received)
 

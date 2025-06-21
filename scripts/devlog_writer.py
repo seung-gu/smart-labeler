@@ -17,29 +17,46 @@ def load_existing_log(path):
 
 def write_devlog(entries, out_path=None):
     """
-    Writes or updates the devlog with new issue entries.
-    Fully replaces today's section if it already exists.
+    Appends new issue entries to today's section in devlog.
+    - Does not duplicate issue numbers
+    - Avoids repeating today's date if already present
     """
     existing = load_existing_log(out_path)
+    existing_issue_numbers = set(re.findall(r"\[#(\d+)]", existing))
     today = datetime.now().strftime("%Y-%m-%d")
-    new_block = [f"\n----\n## {today}"]
+
+    lines = existing.strip().splitlines()
+    output = lines.copy()
+    new_entries = []
+
+    # Check if today's header already exists
+    today_exists = any(line.strip() == f"## {today}" for line in lines)
+
+    if not today_exists:
+        output += ["", "----", f"## {today}"]
 
     for entry in entries:
+        if str(entry['number']) in existing_issue_numbers:
+            continue  # already logged
+
         issue_url = f"https://github.com/{REPO}/issues/{entry['number']}"
         title_line = f"### - [#{entry['number']}]({issue_url}) {entry['title']}"
-        block_lines = [title_line]
+        block = ["", title_line]
 
         if entry["body"]:
-            block_lines += [f"{line}" for line in entry["body"].strip().splitlines()]
+            block += entry["body"].strip().splitlines()
 
-        new_block += block_lines + [""]
+        block.append("")
+        new_entries += block
 
-    # Remove duplicate today's block if it already exists
-    if f"## {today}" in existing:
-        pattern = rf"----\n## {today}.*?(?=\n----|\Z)"
-        existing = re.sub(pattern, "", existing, flags=re.DOTALL).strip()
+    if not new_entries:
+        print("⚠️ No new entries to append. Skipping.")
+        return
+
+    output += new_entries
 
     with open(out_path, "w", encoding="utf-8") as f:
-        f.write(existing.rstrip() + "\n" + "\n".join(new_block) + "\n")
+        f.write("\n".join(output).strip() + "\n")
 
-    print("✅ Devlog updated with:", entries)
+    print(f"✅ Appended {len(new_entries)//2} issue(s) to devlog.")
+
