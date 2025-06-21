@@ -30,4 +30,7 @@ smart-labeler/
 - [x] Verify the signal as an image
 - [ ] Save RGB image in the desktop when the buffer is full (image is fully received)
 
+### - [#15](https://github.com/seung-gu/smart-labeler/issues/15) Virtual environment setup
+This project is configured using `pipenv` for virtual environment and dependency management.
 
+The packages will be managed via `Pipfile` and `Pipfile.lock`.
