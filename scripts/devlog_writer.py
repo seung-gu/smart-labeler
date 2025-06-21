@@ -36,8 +36,8 @@ def write_devlog(entries, out_path=None):
         output += ["", "----", f"## {today}"]
 
     for entry in entries:
-        if str(entry['number']) in existing_issue_numbers:
-            continue  # already logged
+        if str(entry["number"]) in existing_issue_numbers or "[MR]" in entry["title"]:
+            continue  # Skip already logged issues or PRs marked [MR]
 
         issue_url = f"https://github.com/{REPO}/issues/{entry['number']}"
         title_line = f"### - [#{entry['number']}]({issue_url}) {entry['title']}"

@@ -34,4 +34,3 @@ smart-labeler/
 This project is configured using `pipenv` for virtual environment and dependency management.
 
 The packages will be managed via `Pipfile` and `Pipfile.lock`.
-
