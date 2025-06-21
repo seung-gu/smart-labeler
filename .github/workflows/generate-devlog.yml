@@ -2,7 +2,8 @@ name: Update Devlog on Push
 
 on:
   push:
-    branches: [main]
+    branches:
+      - "**"
   workflow_dispatch:
 
 jobs:
@@ -26,6 +27,16 @@ jobs:
       - name: Install dependencies
         run: pip install python-dotenv requests
 
+      - name: Check if only devlog.md changed
+        id: changes
+        uses: tj-actions/changed-files@v44
+        with:
+          files: docs/devlog.md
+
+      - name: Skip devlog generation if only devlog.md changed
+        if: steps.changes.outputs.only_changed == 'true'
+        run: echo "🟡 Only devlog.md changed. Skipping generate_devlog.py."
+
       - name: Generate Devlog
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -38,4 +49,4 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ github.repository }}
           git add docs/devlog.md
           git commit -m "🔄 Auto-update devlog" || echo "No changes"
-          git push origin HEAD:main
+          git push origin HEAD
