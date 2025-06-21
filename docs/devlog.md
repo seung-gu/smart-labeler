@@ -7,7 +7,6 @@ structure
 
 
 ```
-
 smart-labeler/
 ├── board/                            # Hardware (MCU) source code
 │   └── nano33ble/                    # Arduino Nano 33 BLE firmware (PlatformIO)
@@ -21,5 +20,14 @@ smart-labeler/
 - [x] Code structure updated
 - [x] PlatformIO version issue resolved (see in the comment section below)
 
+----
+## 2025-06-21
+### - [#11](https://github.com/seung-gu/smart-labeler/issues/11) OV7675 camera: wiring, configuration, and signal verification
+- [x] Implement a code running OV7675 camera in Nano 33 BLE 
+> Nano 33 BLE <----(serial com)----> Desktop 
+
+- [x] Get signal in Desktop through Serial communication
+- [x] Verify the signal as an image
+- [ ] Save RGB image in the desktop when the buffer is full (image is fully received)
 
 
