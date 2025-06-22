@@ -3,28 +3,15 @@ GitHub API utility functions.
 Handles issue fetching, comment retrieval, and commit parsing.
 Relies on authentication headers defined in config.py.
 """
-
+import re
 import requests
 import os
-import re
 from config import REPO, HEADERS
+
 
 def get_latest_commit_message():
     """Returns the latest commit message from local Git log."""
     return os.popen("git log -1 --pretty=%B").read().strip()
-
-def extract_referenced_issues(commit_message):
-    """Extracts all issue numbers in the format #123 from a commit message."""
-    return list(set(re.findall(r"#(\d+)", commit_message)))
-
-def extract_issue_from_merge_commit(commit_msg):
-    """
-    Extracts issue number from typical merge commit messages:
-    e.g. 'Merge pull request #18 from seung-gu/15-virtual-environment-setup'
-    Returns issue number as string ('15') or None.
-    """
-    match = re.search(r"/(\d+)-", commit_msg)
-    return match.group(1) if match else None
 
 def fetch_issue_detail(issue_number):
     """Fetches title and body of the specified issue."""
@@ -38,39 +25,17 @@ def fetch_issue_detail(issue_number):
         "body": issue.get("body", "")
     }
 
-def fetch_issue_comments(issue_number):
-    """Fetches all comments associated with the specified issue."""
-    url = f"https://api.github.com/repos/{REPO}/issues/{issue_number}/comments"
-    res = requests.get(url, headers=HEADERS)
-    res.raise_for_status()
-    return [c["body"] for c in res.json()]
+def get_latest_commit_sha():
+    return os.popen("git rev-parse HEAD").read().strip()
 
-def fetch_mr_prs():
-    """
-    Fetch all pull requests with [MR] in the title.
-    """
-    prs = []
-    page = 1
-    while True:
-        url = f"https://api.github.com/repos/{REPO}/pulls?state=all&per_page=50&page={page}"
-        res = requests.get(url, headers=HEADERS)
-        res.raise_for_status()
-        data = res.json()
+def extract_issue_number_from_commit(message):
+    # For merge commits: extract from branch name
+    merge_match = re.match(r"Merge pull request #\d+ from .+/(\d+)-", message)
+    if merge_match:
+        return merge_match.group(1)
+    # For normal commits: extract from #<number>
+    match = re.search(r"#(\d+)", message)
+    return match.group(1) if match else None
 
-        if not data:
-            break
-
-        for pr in data:
-            if "[MR]" in pr["title"]:
-                prs.append({
-                    "number": pr["number"],
-                    "title": pr["title"],
-                    "body": pr.get("body", ""),
-                    "html_url": pr["html_url"],
-                    "base": pr["base"]["ref"],
-                    "head": pr["head"]["ref"]
-                })
-
-        page += 1
-
-    return prs
+def is_merge_commit(message):
+    return re.match(r"Merge pull request #\d+ from .+/\d+-", message) is not None
