@@ -17,6 +17,15 @@ def extract_referenced_issues(commit_message):
     """Extracts all issue numbers in the format #123 from a commit message."""
     return list(set(re.findall(r"#(\d+)", commit_message)))
 
+def extract_issue_from_merge_commit(commit_msg):
+    """
+    Extracts issue number from typical merge commit messages:
+    e.g. 'Merge pull request #18 from seung-gu/15-virtual-environment-setup'
+    Returns issue number as string ('15') or None.
+    """
+    match = re.search(r"/(\d+)-", commit_msg)
+    return match.group(1) if match else None
+
 def fetch_issue_detail(issue_number):
     """Fetches title and body of the specified issue."""
     url = f"https://api.github.com/repos/{REPO}/issues/{issue_number}"

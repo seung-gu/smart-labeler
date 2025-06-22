@@ -8,6 +8,7 @@ requests = "*"
 dotenv = "*"
 opencv-python = "*"
 pyserial = "*"
+pytest = "*"
 
 [dev-packages]
 
