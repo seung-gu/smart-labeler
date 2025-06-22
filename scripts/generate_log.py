@@ -21,6 +21,11 @@ def get_latest_commit_sha():
     return os.popen("git rev-parse HEAD").read().strip()
 
 def extract_issue_number_from_commit(message):
+    # For merge commits: extract from branch name
+    merge_match = re.match(r"Merge pull request #\d+ from .+/(\d+)-", message)
+    if merge_match:
+        return merge_match.group(1)
+    # For normal commits: extract from #<number>
     match = re.search(r"#(\d+)", message)
     return match.group(1) if match else None
 
@@ -45,21 +50,46 @@ def write_devlog(issue, devlog_path):
     devlog_existing = load_log(devlog_path)
     today = datetime.now().strftime("%Y-%m-%d")
     date_header = f"## {today}"
-    # Only add if not already present for today/title
-    today_section = devlog_existing.split(date_header)[-1] if date_header in devlog_existing else ""
     issue_line = f"### - [#{issue['number']}](https://github.com/{REPO}/issues/{issue['number']}) {issue['title']}"
-    if issue_line not in today_section:
-        if date_header not in devlog_existing:
-            devlog_existing += f"\n----\n{date_header}\n"
-        devlog_block = [issue_line]
-        short_sha = issue["commit_sha"][:7]
-        sha_url = f"https://github.com/{REPO}/commit/{issue['commit_sha']}"
-        commit_line = f"- 🔧 Commit: {issue['commit_msg']}  \n  [`{short_sha}`]({sha_url})"
-        devlog_block.append(commit_line)
-        devlog_block.append("")
-        with open(devlog_path, "w", encoding="utf-8") as f:
-            f.write(devlog_existing.rstrip() + "\n" + "\n".join(devlog_block))
-        print(f"✅ Devlog updated: #{issue['number']}")
+    short_sha = issue["commit_sha"][:7]
+    sha_url = f"https://github.com/{REPO}/commit/{issue['commit_sha']}"
+    commit_line = f"- 🔧 Commit: {issue['commit_msg']}  \n  [`{short_sha}`]({sha_url})"
+
+    # Ensure today's section exists
+    if date_header not in devlog_existing:
+        devlog_existing += f"\n----\n{date_header}\n"
+
+    # Split into lines for easier manipulation
+    lines = devlog_existing.splitlines()
+    # Find today's section start
+    try:
+        date_idx = lines.index(date_header)
+    except ValueError:
+        date_idx = len(lines)
+        lines.append(date_header)
+
+    # Find issue block under today's section
+    try:
+        issue_idx = lines.index(issue_line, date_idx)
+    except ValueError:
+        # Insert issue line after date header
+        issue_idx = date_idx + 1
+        lines.insert(issue_idx, issue_line)
+
+    # Find where to insert the commit line (after issue line, before next issue or end)
+    insert_idx = issue_idx + 1
+    while insert_idx < len(lines) and not lines[insert_idx].startswith("### - "):
+        if short_sha in lines[insert_idx]:
+            # Already logged
+            return
+        insert_idx += 1
+
+    # Insert commit line
+    lines.insert(insert_idx, commit_line)
+    # Write back
+    with open(devlog_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines).rstrip() + "\n")
+    print(f"✅ Devlog updated: #{issue['number']} {short_sha}")
 
 def write_doclog(issue, doclog_path):
     doclog_existing = load_log(doclog_path)
