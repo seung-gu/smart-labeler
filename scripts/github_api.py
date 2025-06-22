@@ -28,6 +28,9 @@ def get_latest_commit_message():
     """Returns the latest commit message from local Git log."""
     return os.popen("git log -1 --pretty=%B").read().strip()
 
+def get_latest_commit_sha():
+    return os.popen("git rev-parse HEAD").read().strip()
+
 def fetch_issue_detail(issue_number):
     """Fetches title and body of the specified issue."""
     url = f"https://api.github.com/repos/{REPO}/issues/{issue_number}"
@@ -39,9 +42,6 @@ def fetch_issue_detail(issue_number):
         "title": issue["title"],
         "body": issue.get("body", "")
     }
-
-def get_latest_commit_sha():
-    return os.popen("git rev-parse HEAD").read().strip()
 
 def extract_issue_number_from_commit(message):
     # For merge commits: extract from branch name

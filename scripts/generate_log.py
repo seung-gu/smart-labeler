@@ -3,8 +3,8 @@ import re
 from datetime import datetime
 
 from scripts.config import REPO
-from scripts.github_api import get_latest_commit_message, is_merge_commit, \
-    extract_issue_number_from_commit, fetch_issue_detail, get_unpushed_commits, extract_issue_number_from_branch
+from scripts.github_api import (get_latest_commit_message, is_merge_commit, extract_issue_number_from_commit,
+                                fetch_issue_detail, get_unpushed_commits, extract_issue_number_from_branch)
 from utils.path_utils import get_target_directory
 
 
