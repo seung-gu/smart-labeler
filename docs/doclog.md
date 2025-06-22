@@ -36,3 +36,13 @@ This project is configured using `pipenv` for virtual environment and dependency
 The packages will be managed via `Pipfile` and `Pipfile.lock`.
 
 
+
+----
+## 2025-06-22
+### - [#20](https://github.com/seung-gu/smart-labeler/issues/20) Auto update log development
+Development and documentation log can be automatically updated whenever it's pushed or branch is merged.
+
+In `devlog.md`, every commit message can be updated whenever it's pushed.
+
+In `doclog.md`, every content of tickets can be updated whenever pull request is created and merged.
+

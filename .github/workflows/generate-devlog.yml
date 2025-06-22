@@ -35,7 +35,7 @@ jobs:
 
       - name: Skip devlog generation if only devlog.md changed
         if: steps.changes.outputs.only_changed == 'true'
-        run: echo "🟡 Only devlog.md changed. Skipping generate_devlog.py."
+        run: echo "🟡 Only devlog.md changed. Skipping generate_log.py."
 
       - name: Run Log Generator
         run: python scripts/generate_log.py
@@ -50,4 +50,6 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_TOKEN }}@github.com/${{ github.repository }}
           git add docs/devlog.md
           git commit -m "🔄 Auto-update devlog" || echo "No changes"
+          git add docs/doclog.md
+          git commit -m "🔄 Auto-update doclog" || echo "No changes"
           git push origin HEAD
