@@ -3,8 +3,8 @@ import re
 from datetime import datetime
 
 from scripts.config import REPO
-from scripts.github_api import get_latest_commit_message, get_latest_commit_sha, is_merge_commit, \
-    extract_issue_number_from_commit, fetch_issue_detail
+from scripts.github_api import (get_latest_commit_message, is_merge_commit, extract_issue_number_from_commit,
+                                fetch_issue_detail, get_unpushed_commits, extract_issue_number_from_branch)
 from utils.path_utils import get_target_directory
 
 
@@ -79,22 +79,24 @@ def write_doclog(issue, doclog_path):
     print(f"📚 Doclog updated: #{issue['number']}")
 
 if __name__ == "__main__":
-    commit_msg = get_latest_commit_message()
-    commit_sha = get_latest_commit_sha()
     root = get_target_directory("smart-labeler")
     devlog_path = root / "docs" / "devlog.md"
     doclog_path = root / "docs" / "doclog.md"
 
+    issue_num = extract_issue_number_from_branch()
+
     # PR Merge: update doclog only
+    commit_msg = get_latest_commit_message()
     if is_merge_commit(commit_msg):
         issue_num = extract_issue_number_from_commit(commit_msg)
         if issue_num:
             issue = fetch_issue_detail(issue_num)
             write_doclog(issue, doclog_path)
+
     # Normal commit: update devlog only
-    elif "#"+str(extract_issue_number_from_commit(commit_msg)) in commit_msg and "--ignore-devlog" not in commit_msg:
-        issue_num = extract_issue_number_from_commit(commit_msg)
-        if issue_num:
-            issue = fetch_issue_detail(issue_num)
-            issue.update({"commit_msg": commit_msg, "commit_sha": commit_sha})
-            write_devlog(issue, devlog_path)
+    elif issue_num is not None:
+        for sha, msg in get_unpushed_commits():
+            if f"#{issue_num}" in msg and "--ignore-devlog" not in msg:
+                issue = fetch_issue_detail(issue_num)
+                issue.update({"commit_msg": msg, "commit_sha": sha})
+                write_devlog(issue, devlog_path)
