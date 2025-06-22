@@ -10,3 +10,5 @@
   [`214f895`](https://github.com/seung-gu/smart-labeler/commit/214f8955b1b4c785f2b3be1e5360cf0fbe50e1ca)
 - 🔧 Commit: feat: #20 yml file fix  
   [`bd903a9`](https://github.com/seung-gu/smart-labeler/commit/bd903a94c76e1951b57acf8dd51cbd10deea1063)
+- 🔧 Commit: feat: #20 refactor generate_log and github_api  
+  [`0dc709e`](https://github.com/seung-gu/smart-labeler/commit/0dc709e26780c4971dba7e48d0cae1930715d39b)
