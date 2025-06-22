@@ -41,9 +41,74 @@ The packages will be managed via `Pipfile` and `Pipfile.lock`.
 ----
 ## 2025-06-22
 ### - [#20](https://github.com/seung-gu/smart-labeler/issues/20) Auto update log development
-Development and documentation log can be automatically updated whenever it's pushed or branch is merged.
+## 📝 Log Automation Summary
 
-In `devlog.md`, every commit message can be updated whenever it's pushed.
+This document explains how automatic logging works for `devlog.md` and `doclog.md` in this project.
 
-In `doclog.md`, every content of tickets can be updated whenever pull request is created and merged.
+---
+
+### 📘 Overview Table
+
+| Feature             | devlog.md                                  | doclog.md                                  |
+|---------------------|---------------------------------------------|---------------------------------------------|
+| **Trigger**         | Local `git commit` (via pre-push hook)     | GitHub PR merged into `main`               |
+| **Data Source**     | Commit message + SHA                        | PR title/body + linked issue               |
+| **Update Type**     | Append (by date + issue)                    | Replace full block (per issue)             |
+| **Log Scope**       | Developer activity log                      | Documentation summary per feature          |
+| **Entry Reference** | Commit → Issue number                       | PR → Issue number (via title)              |
+| **Manual Prompts**  | ❌ Disabled                                  | ❌ Disabled                                 |
+
+---
+
+### 🛠 Devlog Rules (docs/devlog.md)
+
+- Triggered on every **local push** (via `.git/hooks/pre-push`)
+- Appends commit info under:
+  - Date section (e.g. `## 2025-06-21`)
+  - Issue section (e.g. `### - [#12](...) Add camera interface`)
+- Format:
+
+```md
+----
+## 2025-06-21
+### - [#12](https://github.com/.../issues/12) Add camera interface
+- 🔧 Commit: Add camera init logic  
+  [`abc1234`](https://github.com/.../commit/abc1234)
+```
+
+- If commit includes `--ignore-devlog`, it is skipped
+- Duplicate SHAs are not added
+
+---
+
+### 📚 Doclog Rules (docs/doclog.md)
+
+- Triggered **only on PR merge to main**
+- PR title must include `Merge pull request` and `{issue_number}` in `Merge pull request {issue_of_PR} {user}/{issue_number}-title` (e.g. _Merge pull request #1050 seung-gu/15-blablabla_ )
+- Full issue body (not commit) is saved:
+  - Replaces any previous log block for that issue
+- Format:
+
+```md
+----
+### - [#15](https://github.com/.../issues/15) Init camera
+<PR body and/or issue body>
+```
+
+---
+
+### ⚙️ Notes
+
+- `generate_log.py` handles both `devlog` and `doclog` in one entrypoint
+- Uses GitHub API with `GH_TOKEN`
+- Automatically detects whether it's:
+  - Local push → devlog
+  - GitHub PR merge → doclog
+
+---
+
+### 🔍 Limitations
+
+- Auto-updated `devlog.md` from the `pre-push` hook is committed during the hook, but **not pushed immediately**. Users must **manually push once more** to sync the devlog update
+- Only logs commits that explicitly reference `#<number>`
 
