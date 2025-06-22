@@ -37,10 +37,11 @@ jobs:
         if: steps.changes.outputs.only_changed == 'true'
         run: echo "🟡 Only devlog.md changed. Skipping generate_devlog.py."
 
-      - name: Generate Devlog
+      - name: Run Log Generator
+        run: python scripts/generate_log.py
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: python scripts/generate_devlog.py
+          PYTHONPATH: ${{ github.workspace }}
 
       - name: Commit and Push Devlog
         run: |
