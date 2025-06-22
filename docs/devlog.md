@@ -18,3 +18,7 @@
   [`471e547`](https://github.com/seung-gu/smart-labeler/commit/471e547173ccd463139b6609a85319aa4fc420eb)
 - 🔧 Commit: feat: #20 multiple commits update refactor  
   [`3074dbc`](https://github.com/seung-gu/smart-labeler/commit/3074dbc53bc32c09597b4bd2bf8b85184bd87e04)
+- 🔧 Commit: feat: #20 ci pipeline change - devlog auto update diable  
+  [`8b40318`](https://github.com/seung-gu/smart-labeler/commit/8b40318322e08cf1ccbaca1e92747068cbe15636)
+- 🔧 Commit: feat: #20 minor refactor  
+  [`b46faf6`](https://github.com/seung-gu/smart-labeler/commit/b46faf6537b68937ea4335007ee5823427493d84)
