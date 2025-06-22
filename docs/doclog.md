@@ -30,19 +30,15 @@ smart-labeler/
 - [x] Verify the signal as an image
 - [ ] Save RGB image in the desktop when the buffer is full (image is fully received)
 
-### - [#15](https://github.com/seung-gu/smart-labeler/issues/15) Virtual environment setup
-This project is configured using `pipenv` for virtual environment and dependency management.
 
-The packages will be managed via `Pipfile` and `Pipfile.lock`.
-
-
-
-----
-## 2025-06-22
 ### - [#20](https://github.com/seung-gu/smart-labeler/issues/20) Auto update log development
 Development and documentation log can be automatically updated whenever it's pushed or branch is merged.
 
 In `devlog.md`, every commit message can be updated whenever it's pushed.
 
 In `doclog.md`, every content of tickets can be updated whenever pull request is created and merged.
+### - [#15](https://github.com/seung-gu/smart-labeler/issues/15) Virtual environment setup
+This project is configured using `pipenv` for virtual environment and dependency management.
+
+The packages will be managed via `Pipfile` and `Pipfile.lock`.
 
