@@ -31,31 +31,26 @@
 #include <Arduino_OV767X.h>
 
 int bytesPerFrame;
-
-// GRAYSCALE mode 2 bytes per pixel
 byte data[320 * 240 * 2];
 
 void setup() {
   Serial.begin(230400);
   while (!Serial);
 
-  if (!Camera.begin(QVGA, GRAYSCALE, 1)) {
+  if (!Camera.begin(QVGA, RGB565, 1)) {
     Serial.println("Failed to initialize camera!");
     while (1);
   }
-
   bytesPerFrame = Camera.width() * Camera.height() * Camera.bytesPerPixel();  // == 2
 }
 
 void loop() {
-  Camera.readFrame(data);
-
-  // Even bytes only: Y value
-  for (int i = 0; i < 320 * 240; i++) {
-    uint8_t y = data[i * 2];  // Even bytes: Y0, Y1, Y2, ...
-    uint8_t bit = (y > 127) ? 1 : 0;
-    Serial.write(bit);
+  // 1. Wait for signal from host
+  if (Serial.available()) {
+    String cmd = Serial.readStringUntil('\n');
+    if (cmd == "READY") {
+      Camera.readFrame(data);
+      Serial.write(data, bytesPerFrame);  // send entire RGB565 frame
+    }
   }
-
-  delay(1000);
 }
