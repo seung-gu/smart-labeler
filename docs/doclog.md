@@ -123,16 +123,22 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 > A 16-bit RGB555 pixel is structured as follows:
 > 
 > > Bit layout:
+> > 
 > > [15:11] - Red   (5 bits)
+> > 
 > > [10:5]   - Green (6 bits)
+> > 
 > > [4:0]   - Blue  (5 bits)
 > 
 > This format uses **5 - 6 bits per color channel**, aligned to the **most significant bits** to preserve brightness when converting to 8 bits.
 >
 > 🎯 RGB888 Conversion (8 bits per channel)
-> >   Red: 5 bits → 8 bits → R << 3
-> >    Green: 6 bits → 8 bits → G << 2
-> >    Blue: 5 bits → 8 bits → B << 3
+> 
+> > Red: 5 bits → 8 bits → R << 3
+> > 
+> > Green: 6 bits → 8 bits → G << 2
+> > 
+> > Blue: 5 bits → 8 bits → B << 3
 > 
 > 
 > 
