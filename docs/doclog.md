@@ -22,15 +22,6 @@ smart-labeler/
 
 ----
 ## 2025-06-21
-### - [#11](https://github.com/seung-gu/smart-labeler/issues/11) OV7675 camera: wiring, configuration, and signal verification
-- [x] Implement a code running OV7675 camera in Nano 33 BLE 
-> Nano 33 BLE <----(serial com)----> Desktop 
-
-- [x] Get signal in Desktop through Serial communication
-- [x] Verify the signal as an image
-- [ ] Save RGB image in the desktop when the buffer is full (image is fully received)
-
-
 
 ### - [#15](https://github.com/seung-gu/smart-labeler/issues/15) Virtual environment setup
 This project is configured using `pipenv` for virtual environment and dependency management.
@@ -111,4 +102,42 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 
 - Auto-updated `devlog.md` from the `pre-push` hook is committed during the hook, but **not pushed immediately**. Users must **manually push once more** to sync the devlog update
 - Only logs commits that explicitly reference `#<number>`
+
+
+----
+## 2025-06-23
+### - [#11](https://github.com/seung-gu/smart-labeler/issues/11) OV7675 camera: wiring, configuration, and signal verification
+- [x] Implement a code running OV7675 camera in Nano 33 BLE 
+> Nano 33 BLE <----(serial com)----> Desktop 
+
+- [x] Get signal in Desktop through Serial communication
+- [x] Verify the signal as an image
+- [x] Save RGB image in the desktop when the buffer is full (image is fully received)
+
+> 🧩 Function: `rgb565_to_rgb888(byte1, byte2)`
+> 
+> 🔧 Purpose
+> Converts a **16-bit RGB565** encoded pixel (split across two 8-bit bytes) into an **RGB888** (8 bits per channel) format.
+> 
+> 🧪 RGB565 Format
+> A 16-bit RGB555 pixel is structured as follows:
+> 
+> > Bit layout:
+> > [15:11] - Red   (5 bits)
+> > [10:5]   - Green (6 bits)
+> > [4:0]   - Blue  (5 bits)
+> 
+> This format uses **5 - 6 bits per color channel**, aligned to the **most significant bits** to preserve brightness when converting to 8 bits.
+>
+> 🎯 RGB888 Conversion (8 bits per channel)
+> >   Red: 5 bits → 8 bits → R << 3
+> >    Green: 6 bits → 8 bits → G << 2
+> >    Blue: 5 bits → 8 bits → B << 3
+> 
+> 
+> 
+> 📎 Notes
+> - Many low-power image sensors output RGB565, RGB555, or YUV formats due to bandwidth constraints.
+> - **Aligning to MSB(Most Significant Bit) ensures brightness and hue are preserved when rendering on higher-bit displays.**
+> - This conversion is **lossy** but visually acceptable for most applications.
 
