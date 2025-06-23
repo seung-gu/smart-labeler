@@ -106,7 +106,7 @@ This script:
 ----
 ## 📄 Documentation
 
-See [docs/architecture.md](docs/architecture.md) for system design, data flow, and prompt engineering notes.
+See [docs/doclog.md](docs/architecture.md) for system design, data flow, and prompt engineering notes.
 
 
 ----

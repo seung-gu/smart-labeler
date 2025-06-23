@@ -22,3 +22,11 @@
   [`8b40318`](https://github.com/seung-gu/smart-labeler/commit/8b40318322e08cf1ccbaca1e92747068cbe15636)
 - 🔧 Commit: feat: #20 minor refactor  
   [`b46faf6`](https://github.com/seung-gu/smart-labeler/commit/b46faf6537b68937ea4335007ee5823427493d84)
+
+----
+## 2025-06-24
+### - [#11](https://github.com/seung-gu/smart-labeler/issues/11) OV7675 camera: wiring, configuration, and signal verification
+- 🔧 Commit: feat: #11 implements color image transmission from Nano 33 BLE  
+  [`db6fb78`](https://github.com/seung-gu/smart-labeler/commit/db6fb781e718736b78ba063bb66de9883d97a785)
+- 🔧 Commit: feat: #11 rgb display added in python side. Make synchronous communication by sending "READY"  
+  [`085137c`](https://github.com/seung-gu/smart-labeler/commit/085137ccbe3f34c8d7bc91299c86321676fa785e)
