@@ -56,32 +56,8 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 - Triggered on every **local push** (via `.git/hooks/pre-push`)
 - Appends commit info under:
   - Date section (e.g. `## 2025-06-21`)
-  - Issue section (e.g. `### - [#12](...) Add camera interface`)
-- Format:
+  - Issue section (e.g. `
 
-```md
-----
-## 2025-06-21
-### - [#12](https://github.com/.../issues/12) Add camera interface
-- 🔧 Commit: Add camera init logic  
-  [`abc1234`](https://github.com/.../commit/abc1234)
-```
-
-- If commit includes `--ignore-devlog`, it is skipped
-- Duplicate SHAs are not added
-
----
-
-### 📚 Doclog Rules (docs/doclog.md)
-
-- Triggered **only on PR merge to main**
-- PR title must include `Merge pull request` and `{issue_number}` in `Merge pull request {issue_of_PR} {user}/{issue_number}-title` (e.g. _Merge pull request #1050 seung-gu/15-blablabla_ )
-- Full issue body (not commit) is saved:
-  - Replaces any previous log block for that issue
-- Format:
-
-```md
-----
 ### - [#15](https://github.com/.../issues/15) Init camera
 <PR body and/or issue body>
 ```
@@ -146,4 +122,25 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 > - Many low-power image sensors output RGB565, RGB555, or YUV formats due to bandwidth constraints.
 > - **Aligning to MSB(Most Significant Bit) ensures brightness and hue are preserved when rendering on higher-bit displays.**
 > - This conversion is **lossy** but visually acceptable for most applications.
+
+
+----
+## 2025-06-24
+### - [#12](https://github.com/seung-gu/smart-labeler/issues/12) Button trigger for capturing image
+- [x] Button test
+> Unfortunately, a switch provided in Tiny machine learning shield does not work  
+> https://content.arduino.cc/assets/MachineLearningCarrierV1.0.pdf  
+> Official schematic shows that the switch pin connects with Pin 13 (D13) as pull-up resistor  
+> But, this Pin 13 shares with LED as the following official pin out  
+> https://images.theengineeringprojects.com/image/webp/2021/01/arduino-nano-33-ble.png.webp?ssl=1  
+> Therefore, sadly it's not possible to use the switch with a read pin for switch input.  
+
+>  
+>  <img src="https://github.com/user-attachments/assets/a2cd54db-cf8c-44af-9acc-66eda51c6bd1" width="300">   
+>
+>  Another pin was tested (D2) with an external switch, and it worked well.  
+> Therefore, the concept (start capturing the image via camera when the button is pressed) will not work if there is no external extra button.  
+>  Although, the capturing by switch is failed, but the project will proceed, and the board will be replaced with **Sparkfun Edge** in the near future.  
+
+- [x] Capture an image if the button triggered
 
