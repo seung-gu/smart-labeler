@@ -30,3 +30,9 @@
   [`db6fb78`](https://github.com/seung-gu/smart-labeler/commit/db6fb781e718736b78ba063bb66de9883d97a785)
 - 🔧 Commit: feat: #11 rgb display added in python side. Make synchronous communication by sending "READY"  
   [`085137c`](https://github.com/seung-gu/smart-labeler/commit/085137ccbe3f34c8d7bc91299c86321676fa785e)
+
+----
+## 2025-06-25
+### - [#12](https://github.com/seung-gu/smart-labeler/issues/12) Button trigger for capturing image
+- 🔧 Commit: feat: #12 no special change.  
+  [`eca159d`](https://github.com/seung-gu/smart-labeler/commit/eca159d67a23b266d0d37bb25f2272758fb0c208)
