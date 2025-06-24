@@ -56,7 +56,34 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 - Triggered on every **local push** (via `.git/hooks/pre-push`)
 - Appends commit info under:
   - Date section (e.g. `## 2025-06-21`)
-  - Issue section (e.g. `
+  - Issue section (e.g. `### - [#12](...) Add camera interface`)
+- Format:
+
+```md
+----
+## 2025-06-21
+### - [#12](https://github.com/.../issues/12) Add camera interface
+- 🔧 Commit: Add camera init logic  
+  [`abc1234`](https://github.com/.../commit/abc1234)
+```
+
+- If commit includes `--ignore-devlog`, it is skipped
+- Duplicate SHAs are not added
+
+---
+
+### 📚 Doclog Rules (docs/doclog.md)
+
+- Triggered **only on PR merge to main**
+- PR title must include `Merge pull request` and `{issue_number}` in `Merge pull request {issue_of_PR} {user}/{issue_number}-title` (e.g. _Merge pull request #1050 seung-gu/15-blablabla_ )
+- Full issue body (not commit) is saved:
+  - Replaces any previous log block for that issue
+- Format:
+
+```md
+----
+### - [#15](https://github.com/.../issues/15) Init camera
+<PR body and/or issue body>
 
 ### - [#15](https://github.com/.../issues/15) Init camera
 <PR body and/or issue body>
