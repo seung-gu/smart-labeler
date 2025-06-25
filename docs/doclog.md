@@ -1,4 +1,4 @@
-# 📘 Document Log (Auto-updated from recent push)
+# 📄 Document Log (Auto-updated from recent push)
 
 ----
 ## 2025-06-19
@@ -32,13 +32,13 @@ The packages will be managed via `Pipfile` and `Pipfile.lock`.
 ----
 ## 2025-06-22
 ### - [#20](https://github.com/seung-gu/smart-labeler/issues/20) Auto update log development
-## 📝 Log Automation Summary
+### 📝 Log Automation Summary
 
 This document explains how automatic logging works for `devlog.md` and `doclog.md` in this project.
 
 ---
 
-### 📘 Overview Table
+#### 📘 Overview Table
 
 | Feature             | devlog.md                                  | doclog.md                                  |
 |---------------------|---------------------------------------------|---------------------------------------------|
@@ -51,7 +51,7 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 
 ---
 
-### 🛠 Devlog Rules (docs/devlog.md)
+#### 🛠 Devlog Rules (docs/devlog.md)
 
 - Triggered on every **local push** (via `.git/hooks/pre-push`)
 - Appends commit info under:
@@ -72,7 +72,7 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 
 ---
 
-### 📚 Doclog Rules (docs/doclog.md)
+#### 📚 Doclog Rules (docs/doclog.md)
 
 - Triggered **only on PR merge to main**
 - PR title must include `Merge pull request` and `{issue_number}` in `Merge pull request {issue_of_PR} {user}/{issue_number}-title` (e.g. _Merge pull request #1050 seung-gu/15-blablabla_ )
@@ -91,7 +91,7 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 
 ---
 
-### ⚙️ Notes
+#### ⚙️ Notes
 
 - `generate_log.py` handles both `devlog` and `doclog` in one entrypoint
 - Uses GitHub API with `GH_TOKEN`
@@ -101,7 +101,7 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 
 ---
 
-### 🔍 Limitations
+#### 🔍 Limitations
 
 - Auto-updated `devlog.md` from the `pre-push` hook is committed during the hook, but **not pushed immediately**. Users must **manually push once more** to sync the devlog update
 - Only logs commits that explicitly reference `#<number>`
@@ -157,17 +157,20 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 - [x] Button test
 > Unfortunately, a switch provided in Tiny machine learning shield does not work  
 > https://content.arduino.cc/assets/MachineLearningCarrierV1.0.pdf  
+>
 > Official schematic shows that the switch pin connects with Pin 13 (D13) as pull-up resistor  
 > But, this Pin 13 shares with LED as the following official pin out  
 > https://images.theengineeringprojects.com/image/webp/2021/01/arduino-nano-33-ble.png.webp?ssl=1  
+>
 > Therefore, sadly it's not possible to use the switch with a read pin for switch input.  
 
 >  
 >  <img src="https://github.com/user-attachments/assets/a2cd54db-cf8c-44af-9acc-66eda51c6bd1" width="300">   
 >
->  Another pin was tested (D2) with an external switch, and it worked well.  
+> Another pin was tested (D2) with an external switch, and it worked well.  
+>
 > Therefore, the concept (start capturing the image via camera when the button is pressed) will not work if there is no external extra button.  
->  Although, the capturing by switch is failed, but the project will proceed, and the board will be replaced with **Sparkfun Edge** in the near future.  
+> Although, the capturing by switch is failed, but the project will proceed, and the board will be replaced with **Sparkfun Edge** in the near future.  
 
 - [x] Capture an image if the button triggered
 
