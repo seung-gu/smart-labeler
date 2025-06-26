@@ -36,3 +36,9 @@
 ### - [#12](https://github.com/seung-gu/smart-labeler/issues/12) Button trigger for capturing image
 - 🔧 Commit: feat: #12 no special change.  
   [`eca159d`](https://github.com/seung-gu/smart-labeler/commit/eca159d67a23b266d0d37bb25f2272758fb0c208)
+
+----
+## 2025-06-27
+### - [#28](https://github.com/seung-gu/smart-labeler/issues/28) Create Gemini wrapper function and test
+- 🔧 Commit: feat: #28 gemini_api sample function added and test  
+  [`83157fd`](https://github.com/seung-gu/smart-labeler/commit/83157fd0645a7ac03423da2e42f6842f4908f093)
