@@ -174,3 +174,17 @@ This document explains how automatic logging works for `devlog.md` and `doclog.m
 
 - [x] Capture an image if the button triggered
 
+
+----
+## 2025-06-28
+### - [#28](https://github.com/seung-gu/smart-labeler/issues/28) Create Gemini wrapper function and test
+**Description**  
+Implement a wrapper function that sends a prompt and a PIL image to the Gemini API and returns the raw response text.
+
+**Requirements**
+- Use `google.generativeai`
+- Prompt: `"What are the key elements or objects in this image?"`
+- Return only `response.text`
+
+**File(s)**: `gemini_api.py`
+
