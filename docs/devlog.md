@@ -48,3 +48,5 @@
 ### - [#29](https://github.com/seung-gu/smart-labeler/issues/29) Keyword parsing from Gemini response
 - 🔧 Commit: feat: #29 implementing query to gemini api that is triggered by key 's'  
   [`bcc61d3`](https://github.com/seung-gu/smart-labeler/commit/bcc61d357716c196d6f6286aca3b77288d4b7059)
+- 🔧 Commit: feat: #29 refactor and restructure the codes  
+  [`b96794c`](https://github.com/seung-gu/smart-labeler/commit/b96794ce1d12837f572aa59201e6cae99798bdd2)
