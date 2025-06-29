@@ -42,3 +42,9 @@
 ### - [#28](https://github.com/seung-gu/smart-labeler/issues/28) Create Gemini wrapper function and test
 - 🔧 Commit: feat: #28 gemini_api sample function added and test  
   [`83157fd`](https://github.com/seung-gu/smart-labeler/commit/83157fd0645a7ac03423da2e42f6842f4908f093)
+
+----
+## 2025-06-29
+### - [#29](https://github.com/seung-gu/smart-labeler/issues/29) Keyword parsing from Gemini response
+- 🔧 Commit: feat: #29 implementing query to gemini api that is triggered by key 's'  
+  [`bcc61d3`](https://github.com/seung-gu/smart-labeler/commit/bcc61d357716c196d6f6286aca3b77288d4b7059)
