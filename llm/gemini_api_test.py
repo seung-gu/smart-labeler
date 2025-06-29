@@ -1,18 +1,17 @@
-import google.generativeai as genai
 from PIL import Image
-import os
 from dotenv import load_dotenv
+from config.gemini_config import get_model
 
 load_dotenv()
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-model = genai.GenerativeModel("gemini-2.5-flash")
+model = get_model(model="gemini-2.0-flash")
 
-img = Image.open("test_image.png")
+img = Image.open("../images/test_image.png")
 
 response = model.generate_content(
-    ["What do you see in this picture? Please answer only with the keywords", img]
+    ["What do you see in this picture? Please answer only with the keywords. "
+     "If nothing is shown or unclear, answer 'None'", img]
 )
 
 print(response.text)

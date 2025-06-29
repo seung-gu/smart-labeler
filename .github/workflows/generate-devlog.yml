@@ -38,7 +38,7 @@ jobs:
         run: echo "🟡 Only devlog.md changed. Skipping generate_log.py."
 
       - name: Run Log Generator
-        run: python scripts/generate_log.py
+        run: python logging/generate_log.py
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           PYTHONPATH: ${{ github.workspace }}

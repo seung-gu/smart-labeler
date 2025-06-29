@@ -6,7 +6,8 @@ Relies on authentication headers defined in config.py.
 import re
 import requests
 import os
-from config import REPO, HEADERS
+from config.github_config import REPO, HEADERS
+
 
 def get_unpushed_commits():
     """
