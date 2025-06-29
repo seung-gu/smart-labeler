@@ -188,3 +188,22 @@ Implement a wrapper function that sends a prompt and a PIL image to the Gemini A
 
 **File(s)**: `gemini_api.py`
 
+
+----
+## 2025-06-29
+### - [#29](https://github.com/seung-gu/smart-labeler/issues/29) Keyword parsing from Gemini response
+Description
+
+- Parse Gemini's response text into a clean list of keywords.
+- Use a flag to prevent overlapping Gemini API calls during image stream.
+- Parse Gemini's response text into a clean list of keywords.
+
+Requirements
+
+- [x] Return list: ["kitchen", "sink", "window"]. If there is no clear object, return None
+- ~~[ ] Inference state handling (prevent re-entry)~~ -> not needed since it's procedural in the frame loop 
+  > Use a flag to prevent overlapping Gemini API calls during image stream.
+
+- [x] Trigger + output flow integration
+  > Bind the inference pipeline to a key trigger (e.g., 's') in the main OpenCV loop.
+
