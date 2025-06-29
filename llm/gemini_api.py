@@ -1,13 +1,11 @@
 # llm/gemini_api.py
-import google.generativeai as genai
-import os
 from dotenv import load_dotenv
+from config.gemini_config import get_model
 
 load_dotenv()
 
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-2.5-flash")
+model = get_model(model="gemini-2.5-flash")
 
 def query_keywords(img_bgr, prompt=None):
     if prompt is None:

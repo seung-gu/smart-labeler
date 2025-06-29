@@ -5,6 +5,7 @@ import cv2
 from llm.gemini_api import query_keywords
 from utils.image_utils import decode_rgb565
 
+
 WIDTH, HEIGHT = 320, 240
 FRAME_SIZE = WIDTH * HEIGHT * 2
 ser = serial.Serial('/dev/ttyACM0', 230400, timeout=5)

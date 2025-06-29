@@ -1,9 +1,7 @@
 import tempfile
 import os
-from datetime import datetime
+from generate_log import write_devlog, write_doclog
 
-from scripts.generate_log import write_doclog
-from scripts.generate_log import write_devlog
 
 def test_write_devlog():
     issue = {

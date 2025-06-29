@@ -1,6 +1,5 @@
 import serial
 import cv2
-
 from utils.image_utils import decode_rgb565
 
 
@@ -26,7 +25,7 @@ while True:
         print(f"⚠️ Incomplete frame ({len(received)} bytes), skipping.")
         continue
 
-    img_bgr = decode_rgb565(received)  # opencv expects BGR format
+    img_bgr = decode_rgb565(received, WIDTH, HEIGHT)  # opencv expects BGR format
     img_zoomed = cv2.resize(img_bgr, (WIDTH * 2, HEIGHT * 2), interpolation=cv2.INTER_NEAREST)
 
     cv2.imshow("RGB565 Frame", img_zoomed)
