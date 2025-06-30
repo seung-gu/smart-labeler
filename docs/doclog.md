@@ -211,9 +211,12 @@ Requirements
 ----
 ## 2025-06-30
 ### - [#32](https://github.com/seung-gu/smart-labeler/issues/32) FastAPI and Frontend setup
-## 🧠 Smart Labeler: Web & LLM Architecture Summary
 
-### ✅ FastAPI Backend
+### 🧠 Smart Labeler: Web & LLM Architecture Summary
+
+<img src="https://github.com/user-attachments/assets/967dcfe8-7f65-48f9-a9fb-96cc930916ba" width="250" />
+
+#### ✅ FastAPI Backend
 
 - **`/frame`**  
   Receives RGB565 image data via serial, decodes it, and saves as `latest.jpg`.  
@@ -224,7 +227,7 @@ Requirements
 
 ---
 
-### 🧠 Gemini LLM Integration
+#### 🧠 Gemini LLM Integration
 
 - RGB565 image is converted to PIL format before inference.
 - Prompt used:  
@@ -233,7 +236,7 @@ Requirements
 
 ---
 
-### 💻 Frontend (HTML + JavaScript)
+#### 💻 Frontend (HTML + JavaScript)
 
 - **Live Preview:**  
   The image at `/frame` is updated every 2 seconds via JavaScript.
@@ -245,12 +248,12 @@ Requirements
 
 ---
 
-### 📌 Summary
+#### 📌 Summary
 
 - Real-time camera input → Image saved as file → Web preview  
 - **Gemini labeling is manual**, triggered via button click (not continuous)
 - Architecture:  
   Frontend (HTML + JS) ↔ FastAPI backend ↔ Gemini LLM
 
-<img src="https://github.com/user-attachments/assets/967dcfe8-7f65-48f9-a9fb-96cc930916ba" width="250" />
+
 
