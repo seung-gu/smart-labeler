@@ -50,3 +50,9 @@
   [`bcc61d3`](https://github.com/seung-gu/smart-labeler/commit/bcc61d357716c196d6f6286aca3b77288d4b7059)
 - 🔧 Commit: feat: #29 refactor and restructure the codes  
   [`b96794c`](https://github.com/seung-gu/smart-labeler/commit/b96794ce1d12837f572aa59201e6cae99798bdd2)
+
+----
+## 2025-06-30
+### - [#32](https://github.com/seung-gu/smart-labeler/issues/32) simple frontend test
+- 🔧 Commit: feat: #32 large refactoring, web implemented using fastapi  
+  [`79e8eca`](https://github.com/seung-gu/smart-labeler/commit/79e8eca0daf63cb6bc62df2430a606d2961abfdc)
