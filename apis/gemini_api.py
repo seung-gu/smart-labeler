@@ -5,7 +5,7 @@ from config.gemini_config import get_model
 load_dotenv()
 
 
-model = get_model(model="gemini-2.5-flash")
+model = get_model()
 
 def query_keywords(img_bgr, prompt=None):
     if prompt is None:
