@@ -207,3 +207,50 @@ Requirements
 - [x] Trigger + output flow integration
   > Bind the inference pipeline to a key trigger (e.g., 's') in the main OpenCV loop.
 
+
+----
+## 2025-06-30
+### - [#32](https://github.com/seung-gu/smart-labeler/issues/32) FastAPI and Frontend setup
+## 🧠 Smart Labeler: Web & LLM Architecture Summary
+
+### ✅ FastAPI Backend
+
+- **`/frame`**  
+  Receives RGB565 image data via serial, decodes it, and saves as `latest.jpg`.  
+  This file is served to the frontend for live preview.
+
+- **`/ask`**  
+  Sends the saved image to the Gemini API with a prompt and returns extracted keywords as JSON.
+
+---
+
+### 🧠 Gemini LLM Integration
+
+- RGB565 image is converted to PIL format before inference.
+- Prompt used:  
+  `"What do you see in this picture? Please answer only with keywords. If unclear, respond with 'None'."`
+- **The LLM is only called when the user clicks the `Ask Gemini` button.**
+
+---
+
+### 💻 Frontend (HTML + JavaScript)
+
+- **Live Preview:**  
+  The image at `/frame` is updated every 2 seconds via JavaScript.
+- **LLM Request:**  
+  When the user clicks the **"Ask Gemini"** button, a POST request is made to `/ask`.  
+  The result is displayed immediately on the page.
+- **Image Rendering:**  
+  The preview is handled via a standard `<img id="preview">` element.
+
+---
+
+### 📌 Summary
+
+- Real-time camera input → Image saved as file → Web preview  
+- **Gemini labeling is manual**, triggered via button click (not continuous)
+- Architecture:  
+  Frontend (HTML + JS) ↔ FastAPI backend ↔ Gemini LLM
+
+<img src="https://github.com/user-attachments/assets/967dcfe8-7f65-48f9-a9fb-96cc930916ba" width="250" />
+
